@@ -413,3 +413,11 @@
 
 .tg__f--max img{object-position:50% 20%!important}
 .rq--tall blockquote{font-size:clamp(24px,2.5vw,38px)}
+
+/* ---------- 30.10 · hero: «рідкий дим» (js/smoke.js) ---------- */
+.hero__gl{background:radial-gradient(70% 60% at 78% 62%,rgba(27,35,126,.85) 0%,rgba(11,24,73,.6) 40%,rgba(9,20,19,0) 75%),radial-gradient(50% 40% at 30% 85%,rgba(187,212,242,.10) 0%,rgba(9,20,19,0) 70%),#091413;touch-action:pan-y}
+.hero--gl .hero__veil{background:
+ radial-gradient(110% 85% at 0% 45%,rgba(9,20,19,.82) 0%,rgba(9,20,19,.5) 45%,rgba(9,20,19,.08) 78%),
+ linear-gradient(180deg,rgba(9,20,19,.55) 0%,rgba(9,20,19,0) 22%,rgba(9,20,19,0) 68%,rgba(9,20,19,.75) 100%)}
+.hero__t,.hero__sub{text-shadow:0 2px 30px rgba(9,20,19,.6)}
+@media (max-width:900px){.hero--gl .hero__veil{background:linear-gradient(180deg,rgba(9,20,19,.35) 0%,rgba(9,20,19,.42) 25%,rgba(9,20,19,.42) 62%,rgba(9,20,19,.75) 100%)}}

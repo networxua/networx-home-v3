@@ -49,7 +49,8 @@ function waves(cv,o={}){if(!cv)return null;const gl=cv.getContext('webgl',{antia
  if(!TOUCH&&o.mouse)(o.mouse).addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();st.tx=(e.clientX-r.left)/r.width;st.ty=(e.clientY-r.top)/r.height;});
  st.draw=()=>draw(st.last||0);return st;}
 
-const hero=$('.hero');const HW=waves($('.hero__gl'),{mouse:hero,k:1});
+/* 30.10: фон hero — «рідкий дим» (js/smoke.js, WebGL-Fluid-Simulation, MIT); хвиля waves() лишилась у коді, але на hero не запускається */
+const hero=$('.hero');const HW=null;
 
 /* ---------- hero: char split + reveal ---------- */
 $$('[data-chars]').forEach(el=>{const words=el.textContent.split(' ');el.textContent='';words.forEach((w,i)=>{const cw=d.createElement('span');cw.className='cw';[...w].forEach(ch=>{const c=d.createElement('span');c.className='c';c.textContent=ch;cw.appendChild(c);});el.appendChild(cw);if(i<words.length-1)el.appendChild(d.createTextNode(' '));});});
