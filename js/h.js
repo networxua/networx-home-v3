@@ -97,7 +97,7 @@ G.from('.tg__f,.tg__q',{clipPath:'inset(100% 0 0 0)',duration:1.3,stagger:.1,eas
 G.from('.dna__i',{y:40,opacity:0,stagger:.08,duration:.9,ease:'expo.out',scrollTrigger:{trigger:'.dna',start:'top 85%'}});
 
 /* timeline */
-const tl=$('.tl');if(tl){const lis=$$('li',tl);ST.create({trigger:tl,start:'top 75%',end:'bottom 55%',scrub:.5,onUpdate:s=>{tl.style.setProperty('--p',s.progress);lis.forEach((l,i)=>l.classList.toggle('on',s.progress>=i/(lis.length-1)-.02));}});
+const tl=$('.tl');if(tl&&!tl.closest('[data-story]')){const lis=$$('li',tl);ST.create({trigger:tl,start:'top 75%',end:'bottom 55%',scrub:.5,onUpdate:s=>{tl.style.setProperty('--p',s.progress);lis.forEach((l,i)=>l.classList.toggle('on',s.progress>=i/(lis.length-1)-.02));}});
  G.from(lis,{y:30,opacity:0,stagger:.1,duration:.8,scrollTrigger:{trigger:tl,start:'top 80%'}});}
 
 /* cta big word */

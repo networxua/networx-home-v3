@@ -1,38 +1,34 @@
-/* NetWorX — чат-віджет. ДЕМО: сценарій на фронтенді, нічого не надсилає.
-   Для продакшну: підключити LLM-бекенд + запис у Kommo/Telegram (після ок Макса). */
+/* NetWorX — міні-бот на кнопках (без AI). ДЕМО: лише фронтенд, нічого не надсилає.
+   Усі факти — з цього ж сайту: послуги, ціни в блоці «Ціни відкрито», етапи «Без розкачки», кейси, 105+ проєктів, 30 людей, партнер Google і Meta. */
 (()=>{
 const d=document,$=(s,c=d)=>c.querySelector(s);
-const cb=$('[data-cb]'),body=$('[data-cb-body]'),btn=$('[data-cb-btn]'),teaser=$('[data-cb-teaser]'),form=$('[data-cb-form]'),inp=$('input',form);
-const S={};let started=false,waitFor=null;
+const cb=$('[data-cb]');if(!cb)return;
+const body=$('[data-cb-body]'),btn=$('[data-cb-btn]'),teaser=$('[data-cb-teaser]'),form=$('[data-cb-form]');
+if(form)form.remove();
+let started=false;
 const scroll=()=>body.scrollTo({top:body.scrollHeight,behavior:'smooth'});
-const add=(t,me)=>{const e=d.createElement('div');e.className='pm'+(me?' pm--me':'');e.innerHTML=t;body.appendChild(e);scroll();};
+const add=(t,me)=>{const e=d.createElement('div');e.className='pm'+(me?' pm--me':'');e.innerHTML=t;body.appendChild(e);scroll();return e;};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function say(...msgs){for(const m of msgs){const t=d.createElement('div');t.className='pm typing';t.innerHTML='<i></i><i></i><i></i>';body.appendChild(t);scroll();await sleep(Math.min(1700,500+m.length*14));t.remove();add(m);}}
-function opts(list){const w=d.createElement('div');w.className='cb__opts';list.forEach(([l,fn])=>{const b=d.createElement('button');b.type='button';b.textContent=l;b.onclick=()=>{w.remove();add(l,true);fn(l);};w.appendChild(b);});body.appendChild(w);scroll();}
-const ask=(q,key,next,ph)=>{say(q).then(()=>{waitFor={key,next};inp.placeholder=ph||'Напишіть відповідь…';inp.focus({preventScroll:true});});};
-const slots=()=>{const r=[],n=new Date();let dd=new Date(n);const nm=['нд','пн','вт','ср','чт','пт','сб'];while(r.length<3){dd.setDate(dd.getDate()+1);if(dd.getDay()===0)continue;const t=['11:00','14:30','16:00'][r.length];r.push(`${nm[dd.getDay()]} ${dd.getDate()}.${String(dd.getMonth()+1).padStart(2,'0')}, ${t}`);}return r;};
+async function say(...msgs){for(const m of msgs){const t=d.createElement('div');t.className='pm typing';t.innerHTML='<i></i><i></i><i></i>';body.appendChild(t);scroll();await sleep(Math.min(1200,380+m.length*8));t.remove();add(m);}}
+function opts(list){const w=d.createElement('div');w.className='cb__opts';list.forEach(([l,fn,href])=>{let b;
+  if(href){b=d.createElement('a');b.href=href;if(/^http/.test(href)){b.target='_blank';b.rel='noopener';}b.onclick=()=>{add(l,true);};}
+  else{b=d.createElement('button');b.type='button';b.onclick=()=>{w.remove();add(l,true);fn(l);};}
+  b.textContent=l;w.appendChild(b);});body.appendChild(w);scroll();}
+const go=(sel)=>{close();const t=$(sel);if(!t)return;const nx=window.NX&&window.NX.lenis;nx?nx.scrollTo(t,{offset:-70,duration:1.4}):t.scrollIntoView({behavior:'smooth'});};
+const back=['← Меню',()=>menu()];
+const TG=['Написати в Telegram',null,'https://t.me/M_Networx'];
 
 async function start(ctx,val){started=true;
- if(ctx==='preview'){S.site=val;await say(`Бачу сайт <b>${val.replace(/[<>]/g,'')}</b> 👀`,'Зробимо превʼю нового першого екрана за 24 години. Куди надіслати?');return contact();}
- await say('Привіт! Я асистент NetWorX 👋','Ми працюємо з бізнесом клієнта як зі своїм, тож почнемо з вашого. Що зараз найважливіше?');
- menu();}
-function menu(){opts([['Хочу безкоштовний розбір',()=>niche()],['Скільки коштують послуги?',()=>prices()],['Потрібен сайт',()=>site()],['Чим ви відрізняєтесь?',()=>diff()]]);}
-async function prices(){await say('Відкрито, без «напишіть в директ» 🙂','Google Ads і таргет у Meta — від 450 $/міс, SMM — від 500 $/міс, сайти — від 1000 $, боти — від 600 $. Рекламний бюджет окремо, рекомендуємо від 400 $/міс.','Точну суму назвемо після розбору, коли побачимо ваші цифри. Запишемо вас?');opts([['Так, хочу розбір',()=>niche()],['Ще питання',()=>menu()]]);}
-async function site(){await say('Робимо сайти, після яких купують: офер, ціни, докази, бот і заявки одразу в CRM. Від 1000 $.','Можемо показати новий перший екран вашого сайту за 24 години ще до оплати. Є поточний сайт?');opts([['Так, є сайт',()=>ask('Скиньте адресу 👇','site',()=>contact(),'vash-sait.com.ua')],['Сайту ще немає',()=>niche()]]);}
-async function diff(){await say('Коротко, без «команда топ»:','• Не просто налаштовуємо рекламу: щомісяця приходимо з ідеями й гіпотезами\n• Кожен проєкт веде PM зі статусом 🟢🟡🔴, ризики бачимо раніше за вас\n• На складних етапах підключається власник агенції Макс Якушин\n• Стратегія і рішення на людях, а AI дає швидкість і щоденний контроль цифр'.replace(/\n/g,'<br>'),'Хочете, покажемо це на вашому бізнесі? Розбір безкоштовний.');opts([['Так, давайте',()=>niche()],['Подивлюсь кейси',()=>{d.querySelector('#cases').scrollIntoView({behavior:'smooth'});say('Гортайте 👆 Я тут, якщо що.');setTimeout(menu,800);}]]);}
-async function niche(){await say('Чудово! Яка у вас ніша?');opts(['Інтернет-магазин','Бʼюті / медицина','Послуги','B2B / виробництво','Ресторан / доставка','Інше'].map(n=>[n,v=>{S.niche=v;budget();}]));}
-async function budget(){await say('Скільки на місяць готові вкладати в рекламу?');opts(['до 500 $','500–1 500 $','1 500–5 000 $','5 000 $+','Ще не рахували'].map(n=>[n,v=>{S.budget=v;pain();}]));}
-async function pain(){await say(S.budget==='до 500 $'?'Зрозумів. З таким бюджетом чесно скажемо на розборі, чи є сенс запускатись, і з чого почати.':'Добре, з таким бюджетом є з чим працювати.','Що болить найбільше?');opts([['Дорогі заявки',v=>{S.pain=v;contact();}],['Заявки є, продажів мало',v=>{S.pain=v;contact();}],['Агенція не дає ідей',v=>{S.pain=v;contact();}],['Запуск з нуля',v=>{S.pain=v;contact();}]]);}
-function contact(){ask('Як до вас звертатись?','name',()=>ask(`Приємно, ${S.name}! Телефон або @telegram, щоб надіслати підтвердження?`,'phone',()=>book(),'+380… або @username'),'Імʼя');}
-async function book(){await say('Оберіть зручний час для розбору (30–40 хв онлайн):');opts(slots().map(s=>[s,v=>{S.slot=v;done();}]).concat([['Інший час',()=>{S.slot='узгодимо';done();}]]));}
-async function done(){await say(`Готово ✅ ${S.slot==='узгодимо'?'Менеджер узгодить з вами час.':'Записав вас на <b>'+S.slot+'</b>.'}`,'На розборі будуть спеціаліст і PM. Подивимось рекламу, сайт і продажі й принесемо перші ідеї під ваш продукт.','Якщо зручніше в Telegram: <a href="https://t.me/M_Networx" target="_blank" rel="noopener" style="color:#1B237E;font-weight:600">@M_Networx</a>');
- const e=d.createElement('div');e.className='pm pm--sys';e.textContent='✓ Заявка передана менеджеру';body.appendChild(e);scroll();}
+ if(ctx==='preview'){await say(`Бачу сайт <b>${String(val).replace(/[<>&"]/g,'')}</b> 👀`,'Превʼю нового першого екрана покажемо за 24 години. Залиште контакт у формі розбору або напишіть нам у Telegram.');return opts([['Відкрити форму',()=>go('#start')],TG,back]);}
+ await say('Привіт! Я міні-бот NetWorX 👋','Оберіть, що цікавить:');menu();}
+function menu(){opts([['Послуги',svc],['Скільки коштує?',price],['Строки',terms],['Кейси',cases],['Записатись на розбір',book]]);}
+async function svc(){await say('Що робимо:','• Google Ads<br>• Таргет Meta і TikTok<br>• SMM і контент<br>• Сайти<br>• AI-боти','105+ проєктів, 30 людей у команді, офіційний партнер Google і Meta.');opts([['Скільки коштує?',price],['Записатись на розбір',book],back]);}
+async function price(){await say('Ціни відкриті: стартові суми є на сайті в блоці «Ціни відкрито». Рекламний бюджет — окремо.','Точну суму під ваш бізнес назвемо після безкоштовного розбору.');opts([['Показати ціни',()=>go('#services')],['Записатись на розбір',book],back]);}
+async function terms(){await say('Як стартуємо:','День 0 — безкоштовний розбір<br>День 1–2 — план і прогноз<br>48 годин — запуск<br>Щотижня — звіт і нові ідеї','Для сайтів: превʼю першого екрана — за 24 години.');opts([['Записатись на розбір',book],back]);}
+async function cases(){await say('Кейси з цифрами з рекламних кабінетів: Dronehub, MagazinCo, виробництво скла та інші.','Показати?');opts([['Так, до кейсів',()=>go('#cases')],['Було → стало (сайти)',()=>go('#preview')],back]);}
+async function book(){await say('Розбір безкоштовний: подивимось рекламу, сайт і продажі.','Як зручніше?');opts([['Заповнити форму (3 кроки)',()=>go('#start')],TG,['Подзвонити',null,'tel:+380737536589'],back]);}
 
-form.addEventListener('submit',e=>{e.preventDefault();const v=inp.value.trim();if(!v)return;inp.value='';add(v.replace(/[<>]/g,''),true);
- if(waitFor){const w=waitFor;waitFor=null;S[w.key]=v;inp.placeholder='Напишіть повідомлення…';w.next();}
- else say('Дякую! Щоб відповісти точно, оберіть варіант нижче 👇').then(menu);});
-
-const open=(ctx,val)=>{cb.classList.add('cb-open');d.documentElement.classList.add('cb-open');teaser.classList.remove('on');if(!started)start(ctx,val);else if(ctx==='preview'){S.site=val;add(val.replace(/[<>]/g,''),true);contact();}};
+const open=(ctx,val)=>{cb.classList.add('cb-open');d.documentElement.classList.add('cb-open');teaser.classList.remove('on');if(!started)start(ctx,val);else if(ctx==='preview'){start(ctx,val);}};
 const close=()=>{cb.classList.remove('cb-open');d.documentElement.classList.remove('cb-open');};
 btn.onclick=()=>cb.classList.contains('cb-open')?close():open();
 $('.cb__close').onclick=close;teaser.onclick=e=>{if(e.target.closest('.cb__x')){teaser.classList.remove('on');return;}open();};

@@ -27,9 +27,10 @@ SOFTWARE.
 'use strict';
 
 // [NetWorX patch] promo/GA removed
-const canvas = document.querySelector('.hero__gl');
+const NX_SRC = (document.currentScript && document.currentScript.src) || location.href;
+const canvas = document.querySelector('[data-fluid]') || document.querySelector('.hero__gl');
 if (!canvas) return;
-const HERO = canvas.closest('.hero') || canvas.parentNode;
+const HERO = canvas.closest('[data-fluid-host]') || canvas.closest('.hero') || canvas.parentNode;
 const NX_TOUCH = matchMedia('(hover:none)').matches;
 const NX_MOB = NX_TOUCH || innerWidth <= 900 || /Mobi|Android/i.test(navigator.userAgent);
 const NX_WEAK = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3;
@@ -952,7 +953,7 @@ let bloomFramebuffers = [];
 let sunrays;
 let sunraysTemp;
 
-let ditheringTexture = createTextureAsync('js/LDR_LLL1_0.png');
+let ditheringTexture = createTextureAsync(new URL('LDR_LLL1_0.png', NX_SRC).href);
 
 const blurProgram            = new Program(blurVertexShader, blurShader);
 const copyProgram            = new Program(baseVertexShader, copyShader);

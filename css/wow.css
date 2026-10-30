@@ -1,0 +1,64 @@
+/* ===== v3 · WOW (30.10): заявка→Telegram демо, сторітелінг процесу, бот на кнопках, шторка Автодоктор. Лише кольори брендбука. ===== */
+.nav-lab{position:relative}.nav-lab:after{content:"";position:absolute;right:-9px;top:1px;width:6px;height:6px;border-radius:50%;background:var(--sky);box-shadow:0 0 0 3px rgba(187,212,242,.25)}
+
+/* шторка: широкий featured */
+.cmp--wide{grid-column:1/-1}
+@media (min-width:901px){.cmp--wide .cmp__box{aspect-ratio:16/8}}
+
+/* ---------- LEAD → TELEGRAM DEMO ---------- */
+.lead{background:var(--navy);color:#fff;padding:clamp(80px,10vw,150px) 0;overflow:hidden;position:relative;isolation:isolate}
+.lead:before{content:"";position:absolute;inset:-20% -10% auto auto;width:70vw;height:70vw;max-width:900px;max-height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(27,35,126,.95),rgba(27,35,126,0));z-index:-1;pointer-events:none}
+.lead .kick{color:rgba(187,212,242,.75)}
+.lead .h2{color:#fff;max-width:13ch;margin-bottom:22px}.lead .h2 em{font-family:var(--s);font-style:normal;font-weight:400;color:var(--sky);letter-spacing:0}
+.lead__in{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,6vw,100px);align-items:center}
+.lead__s{color:rgba(255,255,255,.78);font-size:clamp(17px,1.4vw,20px);max-width:36ch;margin-bottom:30px;line-height:1.45}
+.lead__chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.lead__chips button{padding:11px 16px;border-radius:99px;font:700 15px var(--f);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(187,212,242,.45);transition:background .25s,color .25s,box-shadow .25s}
+.lead__chips button.on{background:var(--sky);color:var(--navy);box-shadow:none}
+.lead .btn{background:var(--sky);color:var(--navy)}.lead .btn:hover{background:#fff}.lead .btn .arr{background:var(--navy);color:var(--sky)}
+.lead__go.busy{pointer-events:none;opacity:.85}
+.lead__note{margin-top:14px;color:rgba(187,212,242,.7);font-size:11px}
+.lead__fly{position:fixed;left:0;top:0;z-index:200;pointer-events:none;padding:8px 14px;border-radius:99px;background:var(--sky);color:var(--navy);font:700 13px var(--f);box-shadow:0 10px 30px -8px rgba(187,212,242,.8);white-space:nowrap}
+/* phone */
+.lph{justify-self:center;width:min(340px,100%);aspect-ratio:9/18.6;border-radius:52px;padding:11px;background:#091413;box-shadow:0 0 0 1.5px rgba(187,212,242,.25),0 60px 120px -40px rgba(0,0,0,.7),inset 0 0 0 2px rgba(255,255,255,.06);transform-origin:50% 60%}
+.lph__scr{position:relative;height:100%;border-radius:42px;overflow:hidden;display:flex;flex-direction:column;background:
+ radial-gradient(80% 50% at 20% 15%,rgba(187,212,242,.35),transparent 60%),radial-gradient(90% 60% at 90% 80%,rgba(27,35,126,1),transparent 70%),linear-gradient(170deg,#0B1849,#091413)}
+.lph__top{display:flex;justify-content:space-between;align-items:center;padding:16px 26px 0;font:700 14px var(--f);color:#fff;height:44px}
+.lph__isl{position:absolute;left:50%;top:12px;width:96px;height:28px;border-radius:20px;background:#091413;transform:translateX(-50%)}
+.lph__bat{width:24px;height:12px;border-radius:4px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.8);padding:2px;display:block}.lph__bat i{display:block;height:100%;width:70%;background:#fff;border-radius:2px}
+.lph__lock{text-align:center;color:#fff;padding:18px 0 14px}
+.lph__lock b{display:block;font:900 clamp(56px,7vw,76px)/1 var(--h);letter-spacing:-.03em}
+.lph__lock span{font:500 15px var(--f);color:rgba(255,255,255,.8)}
+.lph__stack{flex:1;display:flex;flex-direction:column;gap:8px;padding:6px 10px 14px;overflow:hidden}
+.lph__empty{margin:auto 18px 30px;text-align:center;color:rgba(187,212,242,.75);font:500 13px var(--f);border:1.5px dashed rgba(187,212,242,.35);border-radius:18px;padding:14px}
+.ntf{background:rgba(243,238,227,.94);color:#091413;border-radius:20px;padding:11px 13px 12px;box-shadow:0 14px 30px -14px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transform-origin:50% 0}
+.ntf__h{display:flex;align-items:center;gap:8px;font:700 12px var(--f);color:rgba(9,20,19,.7);margin-bottom:6px}
+.ntf__ic{width:22px;height:22px;border-radius:7px;background:var(--royal);color:#fff;display:grid;place-items:center;flex:none;padding:4px}
+.ntf__ic .lg-mark{position:static;width:14px;height:14px;color:#fff}
+.ntf__h time{margin-left:auto;font-weight:500}
+.ntf__t{font:800 14px/1.2 var(--h);margin-bottom:6px;color:#0B1849}
+.ntf dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font:500 12.5px/1.3 var(--f)}
+.ntf dt{color:rgba(9,20,19,.55)}.ntf dd{font-weight:700;word-break:break-word}
+.ntf dd em{font-style:normal;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--sky);color:var(--navy);border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.ntf--old{opacity:.75}
+.ntf--old dl{display:none}
+@media (max-width:900px){.lead__in{grid-template-columns:1fr}.lph{width:min(300px,86vw)}.lead__chips button{font-size:14px;padding:10px 14px}.lead__go{width:100%;justify-content:center}}
+
+/* ---------- STORY: pinned process ---------- */
+[data-story] .story__pin{position:relative}
+.story__big{pointer-events:none;overflow:hidden;height:1.05em;font:900 clamp(64px,13vw,220px)/1 var(--h);letter-spacing:-.04em;color:var(--navy);margin-top:clamp(30px,5vw,60px)}
+.story__track{display:flex;flex-direction:column;will-change:transform}
+.story__track span{display:block;height:1.05em;white-space:nowrap}
+.story__track span:nth-child(even){color:var(--royal)}
+[data-story] .tl li{transition:opacity .4s}
+.story-on [data-story] .tl li{opacity:.35}
+.story-on [data-story] .tl li.cur{opacity:1}
+.story-on [data-story] .tl li.cur h3{color:var(--royal)}
+@media (max-width:900px){[data-story] .h2{margin-bottom:28px}[data-story] .tl{gap:20px}.story__big{font-size:clamp(54px,17vw,90px);margin-top:26px}}
+
+/* ---------- бот: посилання-кнопки ---------- */
+.cb__opts a{padding:9px 14px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--navy);color:var(--navy);font-size:14px;font-weight:600;transition:background .2s,color .2s}
+.cb__opts a:hover{background:var(--navy);color:#fff}
+
+/* hero: ховаємо заголовок до SplitText (≤1,2 с, поки вантажаться шрифти) */
+.js:not(.no-motion) .hero__t:not(.split){visibility:hidden}

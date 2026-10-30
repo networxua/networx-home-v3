@@ -53,10 +53,12 @@ function waves(cv,o={}){if(!cv)return null;const gl=cv.getContext('webgl',{antia
 const hero=$('.hero');const HW=null;
 
 /* ---------- hero: char split + reveal ---------- */
-$$('[data-chars]').forEach(el=>{const words=el.textContent.split(' ');el.textContent='';words.forEach((w,i)=>{const cw=d.createElement('span');cw.className='cw';[...w].forEach(ch=>{const c=d.createElement('span');c.className='c';c.textContent=ch;cw.appendChild(c);});el.appendChild(cw);if(i<words.length-1)el.appendChild(d.createTextNode(' '));});});
+const heroIntro=()=>{const SPL=window.SplitText;if(SPL&&G)G.registerPlugin(SPL);
+$$('[data-chars]').forEach(el=>{if(SPL){SPL.create(el,{type:'words,chars',wordsClass:'cw',charsClass:'c',reduceWhiteSpace:false});return;}const words=el.textContent.split(' ');el.textContent='';words.forEach((w,i)=>{const cw=d.createElement('span');cw.className='cw';[...w].forEach(ch=>{const c=d.createElement('span');c.className='c';c.textContent=ch;cw.appendChild(c);});el.appendChild(cw);if(i<words.length-1)el.appendChild(d.createTextNode(' '));});});
+$$('[data-chars]').forEach(el=>el.closest('.hero__t').classList.add('split'));
 if(G&&!RM){
  const tl=G.timeline({delay:.15,defaults:{ease:'expo.out'}});
- tl.to('.hero__t .c',{y:0,yPercent:0,duration:1.25,stagger:.028})
+ tl.fromTo('.hero__t .c',{yPercent:105,rotate:10,transformOrigin:'0% 100%'},{y:0,yPercent:0,rotate:0,duration:1.25,stagger:.028})
    .to('.hand__t',{clipPath:'inset(-20% 0% -20% 0)',duration:1.1,ease:'power2.inOut'},'-=.55')
    .to('.hand__u path',{strokeDashoffset:0,duration:.9,ease:'power2.inOut'},'-=.35')
    .to('[data-hero-side]',{opacity:1,y:0,duration:1,stagger:.1,startAt:{y:24}},'-=1.1')
@@ -68,6 +70,8 @@ if(G&&!RM){
  /* легкий паралакс рядків від курсора */
  if(!TOUCH){const l=$$('.hero__t .ln');hero.addEventListener('pointermove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;l.forEach((n,i)=>G.to(n,{x:x*(i?-14:10),y:y*6,duration:1.2,ease:'power3.out'}));});}
 }
+if(ST){ST.sort&&ST.sort();ST.refresh();}};
+(d.fonts&&d.fonts.ready?Promise.race([d.fonts.ready,new Promise(r=>setTimeout(r,1200))]):Promise.resolve()).then(heroIntro);
 
 /* ---------- URL → бот (чесно: без «обробки», одразу відкриваємо бот з контекстом preview, як у v2) ---------- */
 (()=>{const f=$('[data-url]');if(!f)return;const inp=$('input',f),btn=$('button',f);
