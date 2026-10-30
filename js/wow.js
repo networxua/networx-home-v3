@@ -14,7 +14,7 @@ const DAYS=['неділя','понеділок','вівторок','середа
  const tick=()=>{const t=new Date();clk.textContent=big.textContent=now();dt.textContent=DAYS[t.getDay()]+', '+t.getDate()+' '+MON[t.getMonth()];};tick();setInterval(tick,15000);
  let niche='Стоматологія',n=0,busy=false;
  chips.forEach(b=>b.addEventListener('click',()=>{chips.forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-checked',x===b);});niche=b.dataset.n;}));
- const UTM={'Стоматологія':['instagram','cpc','stomatology_demo'],'Автосервіс':['google','cpc','autoservice_demo'],'Салон краси':['facebook','cpc','beauty_demo']};
+ const UTM={'Стоматологія':['instagram','cpc','dental_demo'],'Автосервіс':['google','cpc','auto_demo'],'Салон краси':['facebook','cpc','beauty_demo']};
  const NAMES=['Тест Тестенко','Демо Клієнт','Тестова Олена'];
  const card=()=>{const u=UTM[niche],e=d.createElement('div');e.className='ntf';
   e.innerHTML=`<div class="ntf__h"><span class="ntf__ic"><i class="lg-mark"></i></span><span>NetWorX · Заявки</span><time>щойно</time></div><div class="ntf__t">🔥 Нова заявка з сайту</div><dl><dt>Імʼя</dt><dd>${NAMES[n%NAMES.length]}<em>тест</em></dd><dt>Ніша</dt><dd>${niche}</dd><dt>UTM</dt><dd>source=${u[0]} · medium=${u[1]} · campaign=${u[2]}</dd><dt>Час</dt><dd>${now()}</dd></dl>`;return e;};

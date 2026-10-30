@@ -62,3 +62,4 @@
 
 /* hero: ховаємо заголовок до SplitText (≤1,2 с, поки вантажаться шрифти) */
 .js:not(.no-motion) .hero__t:not(.split){visibility:hidden}
+.ntf dd em{font-family:var(--f)}
